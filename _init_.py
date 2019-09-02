@@ -26,44 +26,53 @@ data = retorno['allOpportunityApplication']['data']
 for reg in data:
     
     if reg['created_at'] is None:
-        created_at = ""
+        created_at = "Null"
     else:
        created_at = datetime.datetime.strptime(reg['created_at'],"%Y-%m-%dT%H:%M:%SZ")
+       created_at = "'%s'" % created_at
+       print(created_at)
       
     if reg['date_matched'] is None:
-        date_matched = ""
+        date_matched = "Null"
     else:
        date_matched = datetime.datetime.strptime(reg['date_matched'],"%Y-%m-%dT%H:%M:%SZ")
+       date_matched = "'%s'" % date_matched
        
     if reg['date_approved'] is None:
-        date_approved = ""
+        date_approved = "Null"
     else:
        date_approved = datetime.datetime.strptime(reg['date_approved'],"%Y-%m-%dT%H:%M:%SZ")
+       date_approved = "'%s'" % date_approved
          
     if reg['experience_start_date'] is None:
-        experience_start_date = ""
+        experience_start_date = "Null"
     else:
        experience_start_date = datetime.datetime.strptime(reg['experience_start_date'],"%Y-%m-%dT%H:%M:%SZ")
+       experience_start_date = "'%s'" % experience_start_date
        
     if reg['date_realized'] is None:
-        date_realized = ""
+        date_realized = "Null"
     else:
        date_realized = datetime.datetime.strptime(reg['date_realized'],"%Y-%m-%dT%H:%M:%SZ")
+       date_realized = "'%s'" % date_realized
        
     if reg['experience_end_date'] is None:
-       experience_end_date = ""
+       experience_end_date = "Null"
     else:
        experience_end_date= datetime.datetime.strptime(reg['experience_end_date'],"%Y-%m-%dT%H:%M:%SZ")
+       experience_end_date = "'%s'" % experience_end_date
          
     if reg['nps_response_completed_at'] is None:
-        nps_response_completed_at = ""
+        nps_response_completed_at = "Null"
     else:
        nps_response_completed_at = datetime.datetime.strptime(reg['nps_response_completed_at'],"%Y-%m-%dT%H:%M:%SZ") 
+       dnps_response_completed_at = "'%s'" % nps_response_completed_at
 
     if  reg['date_approval_broken'] is None:
-        date_approval_broken = ""
+        date_approval_broken = "Null"
     else:   
        date_approval_broken = datetime.datetime.strptime(reg['date_approval_broken'],"%Y-%m-%dT%H:%M:%SZ") 
+       date_approval_broken = "'%s'" % date_approval_broken
 
     query = "INSERT INTO applications(id_application,"
     query +=                    "id_ep,"
@@ -80,7 +89,7 @@ for reg in data:
     query +=                    "finished_at,"
     query +=                    "completed_at,"
     query +=                    "break_approval_at)"
-    query += "VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"  % (reg['id'],
+    query += "VALUES('%s','%s','%s','%s','%s','%s','%s',%s,%s,%s,%s,%s,%s,%s,%s)"  % (reg['id'],
                                                                                                       reg['person']['id'],
                                                                                                       reg['opportunity']['id'],
                                                                                                       reg['person']['home_mc']['id'],
@@ -96,7 +105,6 @@ for reg in data:
                                                                                                       nps_response_completed_at,
                                                                                                       date_approval_broken,
                                                                                                       )
-    print(query)
     banco.executaQuery(conn,query)
     
    
