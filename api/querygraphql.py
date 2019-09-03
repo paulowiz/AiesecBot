@@ -3,7 +3,7 @@ class queryGraphql:
       def __init__(self ):
       
            self.query_01 ="""{
-  allOpportunityApplication(per_page: 2000,filters:  {created_at: {from:"2019-07-01T00:00:01Z", to:"2019-07-15T23:59:59Z"},person_home_mc:1606}) 
+  allOpportunityApplication(per_page: 2000,filters:  {created_at: {from:"2019-07-20T00:00:01Z", to:"2019-07-31T23:59:59Z"},person_home_mc:1606}) 
     {
     paging {
       total_pages

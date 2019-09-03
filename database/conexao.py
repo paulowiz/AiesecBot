@@ -26,6 +26,7 @@ class conexao:
             
     def executaQuery(self,conn,query):
        #conn = conectadb()
+       print(query)
        cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)   
        cur.execute(query)
        conn.commit()

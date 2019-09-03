@@ -108,8 +108,9 @@ for reg in data:
       query +=                    "realized_at,"
       query +=                    "finished_at,"
       query +=                    "completed_at,"
-      query +=                    "break_approval_at)"
-      query += "VALUES('%s','%s','%s','%s','%s','%s','%s',%s,%s,%s,%s,%s,%s,%s,%s)"  % (reg['id'],
+      query +=                    "break_approval_at,"
+      query +=                    "lc_home)"
+      query += "VALUES('%s','%s','%s','%s','%s','%s','%s',%s,%s,%s,%s,%s,%s,%s,%s,'%s')"  % (reg['id'],
                                                                                                          reg['person']['id'],
                                                                                                          reg['opportunity']['id'],
                                                                                                          reg['person']['home_mc']['id'],
@@ -124,6 +125,7 @@ for reg in data:
                                                                                                          experience_end_date,
                                                                                                          nps_response_completed_at,
                                                                                                          date_approval_broken,
+                                                                                                         reg['person']['home_lc']['id']
                                                                                                          )
       #Valida se existe o mc e o lc nas tabelas e somente salva se realmente não tiver
       consultmc = banco.consultaMc(conn,reg['person']['home_mc']['id'])
