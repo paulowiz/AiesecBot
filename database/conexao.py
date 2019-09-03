@@ -32,4 +32,35 @@ class conexao:
        return print("Registro Salvo com sucesso")
        #cur.close()
        #conn.close()
+
+    def consultaMc(self,conn,mcid):
+       cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor) 
+       query = "SELECT mc_id FROM mc WHERE mc_id = %s LIMIT 1" % mcid  
+       cur.execute(query)
+       recset = cur.fetchall()
+       for rec in recset:
+        return (rec) 
+   
+    def consultaOpp(self,conn,oppid):
+       cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor) 
+       query = "SELECT id FROM opportunity WHERE id = %s LIMIT 1" % oppid  
+       cur.execute(query)
+       recset = cur.fetchall()
+       for rec in recset:
+        return (rec) 
+   
+   
+    def consultaEntity(self,conn,entid):
+       cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor) 
+       query = "SELECT lc_id FROM entity WHERE lc_id =  %s LIMIT 1" % entid 
+       cur.execute(query)
+       recset = cur.fetchall()
+       for rec in recset:
+        return (rec) 
+    
+    def chr_remove(self,old, to_remove):
+        new_string = old
+        for x in to_remove:
+          new_string = new_string.replace(x, '')
+          return new_string
 pass

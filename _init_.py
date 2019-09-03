@@ -23,88 +23,159 @@ retorno = graphql.executaGraphQL(queryqg)
 
 data = retorno['allOpportunityApplication']['data']
 
-for reg in data:
-    
-    if reg['created_at'] is None:
-        created_at = "Null"
-    else:
-       created_at = datetime.datetime.strptime(reg['created_at'],"%Y-%m-%dT%H:%M:%SZ")
-       created_at = "'%s'" % created_at
-       print(created_at)
+datapage = retorno['allOpportunityApplication']['paging']
+
+item = 1
+
+for reg in datapage:
+   #total_pages = "total de paginas: "'%s'" " % (reg['total_pages'])  
+   #cuttent_pages = "Pagina atual: "'%s'" " % (reg['current_page']) 
+   #total_items = "Total de items: "'%s'" " % (reg['total_items'])
+   #print(reg['total_pages'])
+   #print(reg['current_page'])
+   #print(reg['total_items'])
+   
+   
+   for reg in data:
+      print(item)
+      if reg['created_at'] is None:
+         created_at = "Null"
+      else:
+         created_at = datetime.datetime.strptime(reg['created_at'],"%Y-%m-%dT%H:%M:%SZ")
+         created_at = "'%s'" % created_at
+         
+      if reg['date_matched'] is None:
+         date_matched = "Null"
+      else:
+         date_matched = datetime.datetime.strptime(reg['date_matched'],"%Y-%m-%dT%H:%M:%SZ")
+         date_matched = "'%s'" % date_matched
+         
+      if reg['date_approved'] is None:
+         date_approved = "Null"
+      else:
+         date_approved = datetime.datetime.strptime(reg['date_approved'],"%Y-%m-%dT%H:%M:%SZ")
+         date_approved = "'%s'" % date_approved
+            
+      if reg['experience_start_date'] is None:
+         experience_start_date = "Null"
+      else:
+         experience_start_date = datetime.datetime.strptime(reg['experience_start_date'],"%Y-%m-%dT%H:%M:%SZ")
+         experience_start_date = "'%s'" % experience_start_date
+         
+      if reg['date_realized'] is None:
+         date_realized = "Null"
+      else:
+         date_realized = datetime.datetime.strptime(reg['date_realized'],"%Y-%m-%dT%H:%M:%SZ")
+         date_realized = "'%s'" % date_realized
+         
+      if reg['experience_end_date'] is None:
+         experience_end_date = "Null"
+      else:
+         experience_end_date= datetime.datetime.strptime(reg['experience_end_date'],"%Y-%m-%dT%H:%M:%SZ")
+         experience_end_date = "'%s'" % experience_end_date
+            
+      if reg['nps_response_completed_at'] is None:
+         nps_response_completed_at = "Null"
+      else:
+         nps_response_completed_at = datetime.datetime.strptime(reg['nps_response_completed_at'],"%Y-%m-%dT%H:%M:%SZ") 
+         dnps_response_completed_at = "'%s'" % nps_response_completed_at
+
+      if  reg['date_approval_broken'] is None:
+         date_approval_broken = "Null"
+      else:   
+         date_approval_broken = datetime.datetime.strptime(reg['date_approval_broken'],"%Y-%m-%dT%H:%M:%SZ") 
+         date_approval_broken = "'%s'" % date_approval_broken
+         
+      if  reg['opportunity']['created_at'] is None:
+            opp_created_at = "Null"
+      else:   
+          opp_created_at = datetime.datetime.strptime(reg['opportunity']['created_at'],"%Y-%m-%dT%H:%M:%SZ") 
+          opp_created_at = "'%s'" % opp_created_at
+          
+      if reg['opportunity']['sub_product'] is None:
+            sub_product = "Null"
+      else:
+            sub_product = "'%s'" % reg['opportunity']['sub_product']['name']         
+             
+      query = "INSERT INTO applications(id_application,"
+      query +=                    "id_ep,"
+      query +=                    "id_opportunity,"
+      query +=                    "id_home,"    
+      query +=                    "id_host,"
+      query +=                    "product,"
+      query +=                    "status,"
+      query +=                    "applied_at,"              
+      query +=                    "accepted_at,"
+      query +=                    "approved_at,"
+      query +=                    "pred_realized_at,"
+      query +=                    "realized_at,"
+      query +=                    "finished_at,"
+      query +=                    "completed_at,"
+      query +=                    "break_approval_at)"
+      query += "VALUES('%s','%s','%s','%s','%s','%s','%s',%s,%s,%s,%s,%s,%s,%s,%s)"  % (reg['id'],
+                                                                                                         reg['person']['id'],
+                                                                                                         reg['opportunity']['id'],
+                                                                                                         reg['person']['home_mc']['id'],
+                                                                                                         reg['home_mc']['id'],
+                                                                                                         reg['opportunity']['programme']['short_name_display'],
+                                                                                                         reg['status'],
+                                                                                                         created_at,
+                                                                                                         date_matched,
+                                                                                                         date_approved,
+                                                                                                         experience_start_date,
+                                                                                                         date_realized,
+                                                                                                         experience_end_date,
+                                                                                                         nps_response_completed_at,
+                                                                                                         date_approval_broken,
+                                                                                                         )
+      #Valida se existe o mc e o lc nas tabelas e somente salva se realmente não tiver
+      consultmc = banco.consultaMc(conn,reg['person']['home_mc']['id'])
+      if consultmc is None:   
+         person_homemc_name = "'%s'" % reg['person']['home_mc']['name']
+         query_mc_1 = "INSERT INTO mc(mc_id,mc_dsc)VALUES(%s,"'%s'")" % (reg['person']['home_mc']['id'],
+                                                                        person_homemc_name)
+         banco.executaQuery(conn,query_mc_1)
+         
+      consultmc = banco.consultaMc(conn,reg['home_mc']['id'])
+      if consultmc is None: 
+         homemc_name = "'%s'" % reg['home_mc']['name']
+         query_mc_2 = "INSERT INTO mc(mc_id,mc_dsc)VALUES(%s,"'%s'")" % (reg['home_mc']['id'],
+                                                                        homemc_name)
+         banco.executaQuery(conn,query_mc_2)
+         
+      consultentity = banco.consultaEntity(conn,reg['host_lc']['id'])
+      if consultentity is None: 
+         hostlc_name = "'%s'" % reg['host_lc']['name']
+         query_entity_1 = "INSERT INTO entity(lc_id,lc_dsc,mc_id)VALUES(%s,"'%s'",%s)" % (reg['host_lc']['id'],
+                                                                                             hostlc_name,
+                                                                                             reg['home_mc']['id'])
+         banco.executaQuery(conn,query_entity_1)  
+         
+      consultentity = banco.consultaEntity(conn,reg['person']['home_lc']['id'])
+      if consultentity  is None: 
+         person_homelc_name = "'%s'" % reg['person']['home_lc']['name']
+         query_entity_2 = "INSERT INTO entity(lc_id,lc_dsc,mc_id)VALUES(%s,"'%s'",%s)" % (reg['person']['home_lc']['id'],
+                                                                                       person_homelc_name,
+                                                                                       reg['person']['home_mc']['id'])
+         banco.executaQuery(conn,query_entity_2)     
+         
+      consultaOpp = banco.consultaOpp(conn,reg['opportunity']['id'])
+      if consultaOpp  is None:             
+         title = banco.chr_remove(reg['opportunity']['title'], "''$(#")
+         query_opp = "INSERT INTO opportunity (id,title,created_at,available_openings,duration,subproduct,product,host_lc,host_mc)"
+         query_opp += "VALUES('%s','%s',%s,'%s','%s',%s,'%s','%s','%s')" % (reg['opportunity']['id'],
+                                                                              title,
+                                                                              opp_created_at,     
+                                                                              reg['opportunity']['available_openings'],
+                                                                              reg['opportunity']['duration'],
+                                                                              sub_product,
+                                                                              reg['opportunity']['programme']['short_name_display'], 
+                                                                              reg['host_lc']['id'],   
+                                                                              reg['home_mc']['id'])
+         banco.executaQuery(conn,query_opp)                                                                       
       
-    if reg['date_matched'] is None:
-        date_matched = "Null"
-    else:
-       date_matched = datetime.datetime.strptime(reg['date_matched'],"%Y-%m-%dT%H:%M:%SZ")
-       date_matched = "'%s'" % date_matched
-       
-    if reg['date_approved'] is None:
-        date_approved = "Null"
-    else:
-       date_approved = datetime.datetime.strptime(reg['date_approved'],"%Y-%m-%dT%H:%M:%SZ")
-       date_approved = "'%s'" % date_approved
-         
-    if reg['experience_start_date'] is None:
-        experience_start_date = "Null"
-    else:
-       experience_start_date = datetime.datetime.strptime(reg['experience_start_date'],"%Y-%m-%dT%H:%M:%SZ")
-       experience_start_date = "'%s'" % experience_start_date
-       
-    if reg['date_realized'] is None:
-        date_realized = "Null"
-    else:
-       date_realized = datetime.datetime.strptime(reg['date_realized'],"%Y-%m-%dT%H:%M:%SZ")
-       date_realized = "'%s'" % date_realized
-       
-    if reg['experience_end_date'] is None:
-       experience_end_date = "Null"
-    else:
-       experience_end_date= datetime.datetime.strptime(reg['experience_end_date'],"%Y-%m-%dT%H:%M:%SZ")
-       experience_end_date = "'%s'" % experience_end_date
-         
-    if reg['nps_response_completed_at'] is None:
-        nps_response_completed_at = "Null"
-    else:
-       nps_response_completed_at = datetime.datetime.strptime(reg['nps_response_completed_at'],"%Y-%m-%dT%H:%M:%SZ") 
-       dnps_response_completed_at = "'%s'" % nps_response_completed_at
-
-    if  reg['date_approval_broken'] is None:
-        date_approval_broken = "Null"
-    else:   
-       date_approval_broken = datetime.datetime.strptime(reg['date_approval_broken'],"%Y-%m-%dT%H:%M:%SZ") 
-       date_approval_broken = "'%s'" % date_approval_broken
-
-    query = "INSERT INTO applications(id_application,"
-    query +=                    "id_ep,"
-    query +=                    "id_opportunity,"
-    query +=                    "id_home,"    
-    query +=                    "id_host,"
-    query +=                    "product,"
-    query +=                    "status,"
-    query +=                    "applied_at,"              
-    query +=                    "accepted_at,"
-    query +=                    "approved_at,"
-    query +=                    "pred_realized_at,"
-    query +=                    "realized_at,"
-    query +=                    "finished_at,"
-    query +=                    "completed_at,"
-    query +=                    "break_approval_at)"
-    query += "VALUES('%s','%s','%s','%s','%s','%s','%s',%s,%s,%s,%s,%s,%s,%s,%s)"  % (reg['id'],
-                                                                                                      reg['person']['id'],
-                                                                                                      reg['opportunity']['id'],
-                                                                                                      reg['person']['home_mc']['id'],
-                                                                                                      reg['home_mc']['id'],
-                                                                                                      reg['opportunity']['programme']['short_name_display'],
-                                                                                                      reg['status'],
-                                                                                                      created_at,
-                                                                                                      date_matched,
-                                                                                                      date_approved,
-                                                                                                      experience_start_date,
-                                                                                                      date_realized,
-                                                                                                      experience_end_date,
-                                                                                                      nps_response_completed_at,
-                                                                                                      date_approval_broken,
-                                                                                                      )
-    banco.executaQuery(conn,query)
+      banco.executaQuery(conn,query)
+      item = item + 1
+    
     
    
