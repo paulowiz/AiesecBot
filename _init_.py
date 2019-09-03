@@ -26,18 +26,15 @@ data = retorno['allOpportunityApplication']['data']
 datapage = retorno['allOpportunityApplication']['paging']
 
 item = 1
-
-for reg in datapage:
-   #total_pages = "total de paginas: "'%s'" " % (reg['total_pages'])  
-   #cuttent_pages = "Pagina atual: "'%s'" " % (reg['current_page']) 
-   #total_items = "Total de items: "'%s'" " % (reg['total_items'])
-   #print(reg['total_pages'])
-   #print(reg['current_page'])
-   #print(reg['total_items'])
    
-   
-   for reg in data:
+for reg in data:
       print(item)
+      
+      consultapl = banco.consultaApplication(conn,reg['id'])
+      if consultapl is not  None:
+             item = item + 1
+             continue
+          
       if reg['created_at'] is None:
          created_at = "Null"
       else:
@@ -131,37 +128,50 @@ for reg in datapage:
       #Valida se existe o mc e o lc nas tabelas e somente salva se realmente não tiver
       consultmc = banco.consultaMc(conn,reg['person']['home_mc']['id'])
       if consultmc is None:   
-         person_homemc_name = "'%s'" % reg['person']['home_mc']['name']
-         query_mc_1 = "INSERT INTO mc(mc_id,mc_dsc)VALUES(%s,"'%s'")" % (reg['person']['home_mc']['id'],
-                                                                        person_homemc_name)
+         #person_homemc_name = "'%s'" % reg['person']['home_mc']['name']
+         erson_homemc_name = reg['person']['home_mc']['name']
+         person_homemc_name = person_homemc_name.replace("'", "")
+         query_mc_1 = "INSERT INTO mc(mc_id,mc_dsc)"
+         query_mc_1 += "VALUES(%s,'%s')" % (reg['person']['home_mc']['id'],person_homemc_name)
+                                                                        
          banco.executaQuery(conn,query_mc_1)
          
       consultmc = banco.consultaMc(conn,reg['home_mc']['id'])
       if consultmc is None: 
-         homemc_name = "'%s'" % reg['home_mc']['name']
-         query_mc_2 = "INSERT INTO mc(mc_id,mc_dsc)VALUES(%s,"'%s'")" % (reg['home_mc']['id'],
-                                                                        homemc_name)
+         #homemc_name = "'%s'" % reg['home_mc']['name']
+         homemc_name = reg['home_mc']['name']
+         homemc_name = homemc_name.replace("'", "")
+         query_mc_2 = "INSERT INTO mc(mc_id,mc_dsc)"
+         query_mc_2 += "VALUES(%s,'%s')" % (reg['home_mc']['id'],homemc_name)
+                                                                        
          banco.executaQuery(conn,query_mc_2)
          
       consultentity = banco.consultaEntity(conn,reg['host_lc']['id'])
       if consultentity is None: 
-         hostlc_name = "'%s'" % reg['host_lc']['name']
-         query_entity_1 = "INSERT INTO entity(lc_id,lc_dsc,mc_id)VALUES(%s,"'%s'",%s)" % (reg['host_lc']['id'],
-                                                                                             hostlc_name,
-                                                                                             reg['home_mc']['id'])
+         #hostlc_name = "'%s'" % reg['host_lc']['name']
+         hostlc_name = reg['host_lc']['name']
+         hostlc_name = hostlc_name.replace("'", "")
+         query_entity_1 = "INSERT INTO entity(lc_id,lc_dsc,mc_id)"
+         query_entity_1 += "VALUES(%s,'%s',%s)" % (reg['host_lc']['id'],
+                                                   hostlc_name,
+                                                   reg['home_mc']['id'])
          banco.executaQuery(conn,query_entity_1)  
          
       consultentity = banco.consultaEntity(conn,reg['person']['home_lc']['id'])
       if consultentity  is None: 
-         person_homelc_name = "'%s'" % reg['person']['home_lc']['name']
-         query_entity_2 = "INSERT INTO entity(lc_id,lc_dsc,mc_id)VALUES(%s,"'%s'",%s)" % (reg['person']['home_lc']['id'],
-                                                                                       person_homelc_name,
-                                                                                       reg['person']['home_mc']['id'])
+         #person_homelc_name = "'%s'" % reg['person']['home_lc']['name']
+         person_homelc_name = reg['person']['home_lc']['name']
+         person_homelc_name = person_homelc_name.replace("'", "")
+         query_entity_2 = "INSERT INTO entity(lc_id,lc_dsc,mc_id)"
+         query_entity_2 += "VALUES(%s,'%s',%s)" % (reg['person']['home_lc']['id'], person_homelc_name,reg['person']['home_mc']['id'])
+                                                                                      
+                                                                                       
          banco.executaQuery(conn,query_entity_2)     
          
       consultaOpp = banco.consultaOpp(conn,reg['opportunity']['id'])
       if consultaOpp  is None:             
-         title = banco.chr_remove(reg['opportunity']['title'], "''$(#")
+         title = reg['opportunity']['title']
+         title =  title.replace("'", "")
          query_opp = "INSERT INTO opportunity (id,title,created_at,available_openings,duration,subproduct,product,host_lc,host_mc)"
          query_opp += "VALUES('%s','%s',%s,'%s','%s',%s,'%s','%s','%s')" % (reg['opportunity']['id'],
                                                                               title,
@@ -170,9 +180,10 @@ for reg in datapage:
                                                                               reg['opportunity']['duration'],
                                                                               sub_product,
                                                                               reg['opportunity']['programme']['short_name_display'], 
-                                                                              reg['host_lc']['id'],   
-                                                                              reg['home_mc']['id'])
-         banco.executaQuery(conn,query_opp)                                                                       
+                                                                              reg['host_lc']['id'],
+                                                                              reg['home_mc']['id'])   
+         banco.executaQuery(conn,query_opp)                                                                    
+                                                                              
       
       banco.executaQuery(conn,query)
       item = item + 1

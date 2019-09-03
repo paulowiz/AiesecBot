@@ -58,9 +58,12 @@ class conexao:
        for rec in recset:
         return (rec) 
     
-    def chr_remove(self,old, to_remove):
-        new_string = old
-        for x in to_remove:
-          new_string = new_string.replace(x, '')
-          return new_string
+    def consultaApplication(self,conn,aplid):
+       cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor) 
+       query = "SELECT id_application FROM applications where id_application =  %s LIMIT 1" % aplid 
+       cur.execute(query)
+       recset = cur.fetchall()
+       for rec in recset:
+        return (rec) 
+    
 pass
