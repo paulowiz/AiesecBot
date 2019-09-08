@@ -1,3 +1,5 @@
+
+///execução de query e passa para json
 const getTableData = (req, res, db) => {
   db.select('*').from('applications') /* mudar ali para o nome da sua tabela */
     .then(items => {
@@ -23,7 +25,7 @@ const getTableData2 = (req, res, db) => {
 }
 
 
-
+//exibe o retorno do banco em json
 module.exports = {
   getTableData,
   getTableData2

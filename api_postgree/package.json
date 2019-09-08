@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "chart.js": "^2.8.0",
+    "chats": "0.0.1",
     "client": "0.0.1",
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
@@ -20,6 +22,6 @@
     "pg": "^7.9.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.19.2"
   }
 }
