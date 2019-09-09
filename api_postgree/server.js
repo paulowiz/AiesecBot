@@ -26,7 +26,7 @@ const main = require('./controllers/main')
 const app = express()
 
 
-const whitelist = ['http://localhost:3001'] /* Não precisa mecher nisso daki */
+const whitelist = ['http://localhost:3000'] /* Não precisa mecher nisso daki */
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
