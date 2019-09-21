@@ -1,9 +1,8 @@
 class queryGraphql:
-     
-      def __init__(self ):
-      
-           self.query_01 ="""{
-  allOpportunityApplication(per_page: 2000,filters:  {created_at: {from:"2019-07-20T00:00:01Z", to:"2019-07-31T23:59:59Z"},person_home_mc:1606}) 
+
+    def __init__(self):
+
+        self.query_01 = """
     {
     paging {
       total_pages
@@ -62,8 +61,13 @@ class queryGraphql:
     }
   }
 }
-              """      
-      def chamaGraphQL(self):
-              input_query = self.query_01 
-              return  input_query
+              """
+
+    def chamaGraphQL(self, page):
+        head = """{allOpportunityApplication(per_page: 100,filters:  {created_at: {from:"2019-08-01T00:00:01Z", to:"2019-08-02T23:59:59Z"},person_home_mc:1606},page:%s)""" % (page)
+        input_hquery = self.query_01
+        input_query = head + input_hquery
+        return input_query
+
+
 pass
