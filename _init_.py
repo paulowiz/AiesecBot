@@ -8,24 +8,27 @@ from api import graphqlconsume, querygraphql
 from pandas.io.json import json_normalize
 import pandas.io.json as pd_json
 import datetime
+import time
+
 
 
 # CONECTA NO BANCO E PERMITE FAZER QUERIES
 banco = conexao("dashboardbf", "thaleslopes",
                 "dashboard-bf.cpcjumtjwpk7.us-west-1.rds.amazonaws.com", "4568520rds")
 conn = banco.conectadb()
+   
 
 # Instancia dos objetos de consumo e query do graphql
 graphql = graphqlconsume.graphqlConsume()
 queryGraphQL = querygraphql.queryGraphql()
-queryqg = queryGraphQL.chamaGraphQL(1)
+queryqg = queryGraphQL.chamaGraphQL(21)
 retorno = graphql.executaGraphQL(queryqg)
 totpages = retorno['allOpportunityApplication']['paging']['total_pages']
 
 item = 1
-i = 1
+i = 21
 while totpages > 0:
-    queryqg = queryGraphQL.chamaGraphQL(i)
+    # CONECTA NO BANCO E PERMITE FAZER QUERIES
     retorno = graphql.executaGraphQL(queryqg)
     data = retorno['allOpportunityApplication']['data']
     datapage = retorno['allOpportunityApplication']['paging']
@@ -78,7 +81,7 @@ while totpages > 0:
             nps_response_completed_at = "Null"
          else:
             nps_response_completed_at = datetime.datetime.strptime(reg['nps_response_completed_at'],"%Y-%m-%dT%H:%M:%SZ") 
-            dnps_response_completed_at = "'%s'" % nps_response_completed_at
+            nps_response_completed_at = "'%s'" % nps_response_completed_at
 
          if  reg['date_approval_broken'] is None:
             date_approval_broken = "Null"
@@ -194,5 +197,13 @@ while totpages > 0:
          item = item + 1
     print(totpages)
     print(retorno['allOpportunityApplication']['paging']['current_page'])
+    graphql = graphqlconsume.graphqlConsume()
+    queryGraphQL = querygraphql.queryGraphql()
     totpages = totpages - 1
-    i = i+1    
+    i = i+1 
+    try:
+      queryqg = queryGraphQL.chamaGraphQL(i)   
+    except:
+       print('Ocorreu um erro ao execular a query GraphQL ,tentando novamente em 20 seg')
+       time.sleep(20)
+       queryqg = queryGraphQL.chamaGraphQL(i)   
