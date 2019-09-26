@@ -101,7 +101,12 @@ class RobotRotine:
                 if reg['opportunity']['sub_product'] is None:
                     sub_product = "Null"
                 else:
-                    sub_product = "'%s'" % reg['opportunity']['sub_product']['name']         
+                    sub_product = "'%s'" % reg['opportunity']['sub_product']['name'] 
+
+                if reg['opportunity']['duration'] is None:
+                    duration = "Null"
+                else:
+                    duration = "'%s'" % reg['opportunity']['duration']        
                     
                 query = "INSERT INTO applications(id_application,"
                 query +=                    "id_ep,"
@@ -184,7 +189,7 @@ class RobotRotine:
                                                                                         title,
                                                                                         opp_created_at,     
                                                                                         reg['opportunity']['available_openings'],
-                                                                                        reg['opportunity']['duration'],
+                                                                                        duration,
                                                                                         sub_product,
                                                                                         reg['opportunity']['programme']['short_name_display'], 
                                                                                         reg['host_lc']['id'],
