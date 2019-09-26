@@ -63,8 +63,9 @@ class queryGraphql:
 }
               """
 
-    def chamaGraphQL(self, page):
-        head = """{allOpportunityApplication(per_page: 200,filters:  {date_approved: {from:"2016-01-01T00:00:01Z", to:"2017-04-31T23:59:59Z"},person_home_mc:1606},page:%s)""" % (page)
+    def chamaGraphQL(self, tp_data, dt_from, dt_to, page):
+        head = """{allOpportunityApplication(per_page: 200,filters:  {%s: {from:"%s", to:"%s"},opportunity_home_mc: 1606},page:%s)""" % (
+            tp_data, dt_from, dt_to, page)
         input_hquery = self.query_01
         input_query = head + input_hquery
         return input_query
