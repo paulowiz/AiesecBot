@@ -21,12 +21,12 @@ conn = banco.conectadb()
 # Instancia dos objetos de consumo e query do graphql
 graphql = graphqlconsume.graphqlConsume()
 queryGraphQL = querygraphql.queryGraphql()
-queryqg = queryGraphQL.chamaGraphQL(21)
+queryqg = queryGraphQL.chamaGraphQL(1)
 retorno = graphql.executaGraphQL(queryqg)
 totpages = retorno['allOpportunityApplication']['paging']['total_pages']
 
 item = 1
-i = 21
+i = 1
 while totpages > 0:
     # CONECTA NO BANCO E PERMITE FAZER QUERIES
     retorno = graphql.executaGraphQL(queryqg)
