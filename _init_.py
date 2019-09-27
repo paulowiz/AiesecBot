@@ -4,5 +4,5 @@ from api import graphqlconsume, querygraphql
 
 robo1 = rr.RobotRotine()
 
-robo1.ExecutaRotina('date_approved', '2019-09-20T00:00:01Z',
-                    '2019-09-26T00:00:01Z', 1)
+robo1.ExecutaRotina('date_approved', '2016-01-20T00:00:01Z',
+                    '2016-06-30T23:59:59Z', 3)

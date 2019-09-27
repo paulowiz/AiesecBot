@@ -9,6 +9,7 @@ from pandas.io.json import json_normalize
 import pandas.io.json as pd_json
 import datetime
 import time
+import os
 
 
 class RobotRotine:
@@ -16,6 +17,7 @@ class RobotRotine:
     def __init__(self):
         #self.name = name
         print('Robo criado!')
+        
 
     def ExecutaRotina(self,tp_data, dt_from, dt_to, page):
         # CONECTA NO BANCO E PERMITE FAZER QUERIES
@@ -29,7 +31,7 @@ class RobotRotine:
         totpages = retorno['allOpportunityApplication']['paging']['total_pages']
 
         item = 1
-        i = 1
+        i = page
         while totpages > 0:
             # CONECTA NO BANCO E PERMITE FAZER QUERIES
             retorno = graphql.executaGraphQL(queryqg)
@@ -106,7 +108,22 @@ class RobotRotine:
                 if reg['opportunity']['duration'] is None:
                     duration = "Null"
                 else:
-                    duration = "'%s'" % reg['opportunity']['duration']        
+                    duration = "'%s'" % reg['opportunity']['duration']      
+
+                if reg['person']['home_mc']['id'] is None:
+                    p_home_mc = "Null"
+                else:
+                    p_home_mc = "'%s'" % reg['person']['home_mc']['id'] 
+                    
+                if reg['home_mc'] is None:
+                      print('Registro com mc_home inválido!')
+                      continue
+                else:
+                    if reg['home_mc']['id'] is None:
+                        home_mc = "Null"
+                    else:
+                        home_mc = "'%s'" % reg['home_mc']['id'] 
+                    
                     
                 query = "INSERT INTO applications(id_application,"
                 query +=                    "id_ep,"
@@ -124,11 +141,11 @@ class RobotRotine:
                 query +=                    "completed_at,"
                 query +=                    "break_approval_at,"
                 query +=                    "lc_home)"
-                query += "VALUES('%s','%s','%s','%s','%s','%s','%s',%s,%s,%s,%s,%s,%s,%s,%s,'%s')"  % (reg['id'],
+                query += "VALUES('%s',%s,'%s',%s,%s,'%s','%s',%s,%s,%s,%s,%s,%s,%s,%s,'%s')"  % (reg['id'],
                                                                                                                     reg['person']['id'],
                                                                                                                     reg['opportunity']['id'],
-                                                                                                                    reg['person']['home_mc']['id'],
-                                                                                                                    reg['home_mc']['id'],
+                                                                                                                    p_home_mc,
+                                                                                                                    home_mc,
                                                                                                                     reg['opportunity']['programme']['short_name_display'],
                                                                                                                     reg['status'],
                                                                                                                     created_at,
@@ -142,23 +159,24 @@ class RobotRotine:
                                                                                                                     reg['person']['home_lc']['id']
                                                                                                                     )
                 #Valida se existe o mc e o lc nas tabelas e somente salva se realmente não tiver
-                consultmc = banco.consultaMc(conn,reg['person']['home_mc']['id'])
-                if consultmc is None:   
-                    erson_homemc_name = reg['person']['home_mc']['name']
-                    person_homemc_name = person_homemc_name.replace("'", "")
-                    query_mc_1 = "INSERT INTO mc(mc_id,mc_dsc)"
-                    query_mc_1 += "VALUES(%s,'%s')" % (reg['person']['home_mc']['id'],person_homemc_name)
-                                                                                
-                    banco.executaQuery(conn,query_mc_1)
-                    
-                consultmc = banco.consultaMc(conn,reg['home_mc']['id'])
-                if consultmc is None: 
-                    homemc_name = reg['home_mc']['name']
-                    homemc_name = homemc_name.replace("'", "")
-                    query_mc_2 = "INSERT INTO mc(mc_id,mc_dsc)"
-                    query_mc_2 += "VALUES(%s,'%s')" % (reg['home_mc']['id'],homemc_name)
-                                                                                
-                    banco.executaQuery(conn,query_mc_2)
+                if reg['person']['home_mc']['id']  is not None:
+                    consultmc = banco.consultaMc(conn,reg['person']['home_mc']['id'])
+                    if consultmc is None:   
+                        erson_homemc_name = reg['person']['home_mc']['name']
+                        person_homemc_name = person_homemc_name.replace("'", "")
+                        query_mc_1 = "INSERT INTO mc(mc_id,mc_dsc)"
+                        query_mc_1 += "VALUES(%s,'%s')" % (reg['person']['home_mc']['id'],person_homemc_name)
+                                                                                    
+                        banco.executaQuery(conn,query_mc_1)
+                if reg['home_mc'] is not None:    
+                    consultmc = banco.consultaMc(conn,reg['home_mc']['id'])
+                    if consultmc is None: 
+                        homemc_name = reg['home_mc']['name']
+                        homemc_name = homemc_name.replace("'", "")
+                        query_mc_2 = "INSERT INTO mc(mc_id,mc_dsc)"
+                        query_mc_2 += "VALUES(%s,'%s')" % (reg['home_mc']['id'],homemc_name)
+                                                                                    
+                        banco.executaQuery(conn,query_mc_2)
                     
                 consultentity = banco.consultaEntity(conn,reg['host_lc']['id'])
                 if consultentity is None: 
@@ -185,7 +203,7 @@ class RobotRotine:
                     title = reg['opportunity']['title']
                     title =  title.replace("'", "")
                     query_opp = "INSERT INTO opportunity (id,title,created_at,available_openings,duration,subproduct,product,host_lc,host_mc)"
-                    query_opp += "VALUES('%s','%s',%s,'%s','%s',%s,'%s','%s','%s')" % (reg['opportunity']['id'],
+                    query_opp += "VALUES('%s','%s',%s,'%s',%s,%s,'%s','%s',%s)" % (reg['opportunity']['id'],
                                                                                         title,
                                                                                         opp_created_at,     
                                                                                         reg['opportunity']['available_openings'],
@@ -193,7 +211,7 @@ class RobotRotine:
                                                                                         sub_product,
                                                                                         reg['opportunity']['programme']['short_name_display'], 
                                                                                         reg['host_lc']['id'],
-                                                                                        reg['home_mc']['id'])   
+                                                                                        home_mc)   
                     banco.executaQuery(conn,query_opp)                                                                    
                                                                                         
                 
@@ -202,6 +220,9 @@ class RobotRotine:
             print(retorno['allOpportunityApplication']['paging']['total_pages'])
             print(retorno['allOpportunityApplication']['paging']['current_page'])
             totpages = totpages - 1
+            if totpages <= 0:
+                print('Processo finalizado!')
+                exit
             i = i+1 
             queryqg = queryGraphQL.chamaGraphQL(tp_data, dt_from, dt_to,i)   
         return
