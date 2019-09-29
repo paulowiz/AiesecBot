@@ -15,7 +15,7 @@ print('-')
 """
 robo5 = rr.RobotRotine()
 i = 0
-dtinit = '2018-06-01T00:00:00'
+dtinit = '2016-06-01T00:00:00'
 while i < 31:
     print(dtinit)
     dtfim = np.datetime64(dtinit) + np.timedelta64(24, 'h')

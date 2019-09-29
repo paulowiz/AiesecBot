@@ -17,7 +17,7 @@ class graphqlConsume:
         #print('Setup complete! \nYour access token is ' + '"' + access_token + '"')
 
         _transport = RequestsHTTPTransport(
-            url='https://gis-api.aiesec.org/graphql?access_token=6d72a076bebbf5c9ce8a444c8995271134655e16c1b4fe43eb3ef114bb2d2759',
+            url='https://gis-api.aiesec.org/graphql?access_token=59f7cbef5abc385e5a9a32f599be7e76d30e8d9493b00d0258bf1125cfa55eef',
                 # str(access_token),
             use_json=True,
         )
