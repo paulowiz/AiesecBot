@@ -110,10 +110,14 @@ class RobotRotine:
                 else:
                     duration = "'%s'" % reg['opportunity']['duration']      
 
-                if reg['person']['home_mc']['id'] is None:
-                    p_home_mc = "Null"
+                if reg['person']['home_mc'] is None:
+                      print('Registro com mc_home inválido!')
+                      continue
                 else:
-                    p_home_mc = "'%s'" % reg['person']['home_mc']['id'] 
+                    if reg['person']['home_mc']['id'] is None:
+                        p_home_mc = "Null"
+                    else:
+                        p_home_mc = "'%s'" % reg['person']['home_mc']['id'] 
                     
                 if reg['home_mc'] is None:
                       print('Registro com mc_home inválido!')
@@ -162,7 +166,7 @@ class RobotRotine:
                 if reg['person']['home_mc']['id']  is not None:
                     consultmc = banco.consultaMc(conn,reg['person']['home_mc']['id'])
                     if consultmc is None:   
-                        erson_homemc_name = reg['person']['home_mc']['name']
+                        person_homemc_name = reg['person']['home_mc']['name']
                         person_homemc_name = person_homemc_name.replace("'", "")
                         query_mc_1 = "INSERT INTO mc(mc_id,mc_dsc)"
                         query_mc_1 += "VALUES(%s,'%s')" % (reg['person']['home_mc']['id'],person_homemc_name)
@@ -212,9 +216,12 @@ class RobotRotine:
                                                                                         reg['opportunity']['programme']['short_name_display'], 
                                                                                         reg['host_lc']['id'],
                                                                                         home_mc)   
-                    banco.executaQuery(conn,query_opp)                                                                    
-                                                                                        
-                
+                    try:
+                        banco.executaQuery(conn,query_opp)  
+                    except:
+                        print('Ocorreu um erro ao salvar a opp da applicacao: %s e opp %s'%(reg['id'],reg['opportunity']['id']))
+                        continue                                                                 
+                                
                 banco.executaQuery(conn,query)
                 item = item + 1
             print(retorno['allOpportunityApplication']['paging']['total_pages'])
