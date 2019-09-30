@@ -15,8 +15,8 @@ print('-')
 """
 robo5 = rr.RobotRotine()
 i = 0
-dtinit = '2016-04-27T00:00:00'
-while i < 16:
+dtinit = '2019-09-15T00:00:00'
+while i < 19:
     print(dtinit)
     dtfim = np.datetime64(dtinit) + np.timedelta64(24, 'h')
     robo5.ExecutaRotina('created_at', dtinit,
