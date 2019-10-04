@@ -13,13 +13,13 @@ print(currentab)
 print('-')
 
 """
-robo2 = rr.RobotRotine()
+robo5 = rr.RobotRotine()
 i = 0
-dtinit = '2019-09-01T00:00:00'
-while i < 18:
+dtinit = '2019-10-03T00:00:00'
+while i < 1:
     print(dtinit)
     dtfim = np.datetime64(dtinit) + np.timedelta64(24, 'h')
-    robo2.ExecutaRotina('date_approved', dtinit,
+    robo5.ExecutaRotina('date_approved', dtinit,
                         dtfim, 1)
     i = i+1
     dtinit = np.datetime64(dtinit) + np.timedelta64(24, 'h')

@@ -19,7 +19,7 @@ dtinit = '2019-09-15T00:00:00'
 while i < 19:
     print(dtinit)
     dtfim = np.datetime64(dtinit) + np.timedelta64(24, 'h')
-    robo5.ExecutaRotina('created_at', dtinit,
+    robo5.ExecutaRotina('date_approved', dtinit,
                         dtfim, 1)
     i = i+1
     dtinit = np.datetime64(dtinit) + np.timedelta64(24, 'h')

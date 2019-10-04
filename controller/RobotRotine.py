@@ -29,10 +29,10 @@ class RobotRotine:
         queryqg = queryGraphQL.chamaGraphQL(tp_data, dt_from, dt_to, page)
         retorno = graphql.executaGraphQL(queryqg)
         totpages = retorno['allOpportunityApplication']['paging']['total_pages']
-
         item = 1
         i = page
         while totpages > 0:
+            
             # CONECTA NO BANCO E PERMITE FAZER QUERIES
             retorno = graphql.executaGraphQL(queryqg)
             data = retorno['allOpportunityApplication']['data']
@@ -40,11 +40,12 @@ class RobotRotine:
             
             for reg in data:
                 print(item)
-                
+                temid = False
                 consultapl = banco.consultaApplication(conn,reg['id'])
                 if consultapl is not  None:
                     item = item + 1
-                    continue
+                    temid = True
+                    #continue
                     
                 if reg['created_at'] is None:
                     created_at = "Null"
@@ -127,8 +128,7 @@ class RobotRotine:
                         home_mc = "Null"
                     else:
                         home_mc = "'%s'" % reg['home_mc']['id'] 
-                    
-                    
+                     
                 query = "INSERT INTO applications(id_application,"
                 query +=                    "id_ep,"
                 query +=                    "id_opportunity,"
@@ -146,22 +146,43 @@ class RobotRotine:
                 query +=                    "break_approval_at,"
                 query +=                    "lc_home)"
                 query += "VALUES('%s',%s,'%s',%s,%s,'%s','%s',%s,%s,%s,%s,%s,%s,%s,%s,'%s')"  % (reg['id'],
-                                                                                                                    reg['person']['id'],
-                                                                                                                    reg['opportunity']['id'],
-                                                                                                                    p_home_mc,
-                                                                                                                    home_mc,
-                                                                                                                    reg['opportunity']['programme']['short_name_display'],
-                                                                                                                    reg['status'],
-                                                                                                                    created_at,
-                                                                                                                    date_matched,
-                                                                                                                    date_approved,
-                                                                                                                    experience_start_date,
-                                                                                                                    date_realized,
-                                                                                                                    experience_end_date,
-                                                                                                                    nps_response_completed_at,
-                                                                                                                    date_approval_broken,
-                                                                                                                    reg['person']['home_lc']['id']
-                                                                                                                    )
+                                                                                                reg['person']['id'],
+                                                                                                reg['opportunity']['id'],
+                                                                                                p_home_mc,
+                                                                                                home_mc,
+                                                                                                reg['opportunity']['programme']['short_name_display'],
+                                                                                                reg['status'],
+                                                                                                created_at,
+                                                                                                date_matched,
+                                                                                                date_approved,
+                                                                                                experience_start_date,
+                                                                                                date_realized,
+                                                                                                experience_end_date,
+                                                                                                nps_response_completed_at,
+                                                                                                date_approval_broken,
+                                                                                                reg['person']['home_lc']['id']
+                                                                                                        )
+                queryup = "UPDATE applications SET ("
+                queryup +=                    "status = '%s',"
+                queryup +=                    "applied_at = %s,"              
+                queryup +=                    "accepted_at = %s,"
+                queryup +=                    "approved_at = %s,"
+                queryup +=                    "pred_realized_at = %s,"
+                queryup +=                    "realized_at = %s,"
+                queryup +=                    "finished_at = %s,"
+                queryup +=                    "completed_at = %s,"
+                queryup +=                    "break_approval_at = %s,"
+                queryup += "where id_application = '%s'" % ( reg['status'],
+                                                                created_at,
+                                                                date_matched,
+                                                                date_approved,
+                                                                experience_start_date,
+                                                                date_realized,
+                                                                experience_end_date,
+                                                                nps_response_completed_at,
+                                                                date_approval_broken,
+                                                                reg['id']
+                                                                )               
                 #Valida se existe o mc e o lc nas tabelas e somente salva se realmente não tiver
                 if reg['person']['home_mc']['id']  is not None:
                     consultmc = banco.consultaMc(conn,reg['person']['home_mc']['id'])
@@ -221,8 +242,16 @@ class RobotRotine:
                     except:
                         print('Ocorreu um erro ao salvar a opp da applicacao: %s e opp %s'%(reg['id'],reg['opportunity']['id']))
                         continue                                                                 
-                                
-                banco.executaQuery(conn,query)
+                #if (((reg['status'] == 'approved') or (reg['status'] == 'realized'))or (reg['status'] == 'matched')):              
+                if temid is False:
+                    banco.executaQuery(conn,query)
+                else:
+                    banco.executaQuery(conn,queryup)
+                    print('update realizado com sucesso!')
+               # else:
+                #     banco.executaQuery(conn,query)
+                        
+                        
                 item = item + 1
             print(retorno['allOpportunityApplication']['paging']['total_pages'])
             print(retorno['allOpportunityApplication']['paging']['current_page'])
