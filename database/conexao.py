@@ -31,7 +31,7 @@ class conexao:
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
         cur.execute(query)
         conn.commit()
-        return print("Registro Salvo com sucesso")
+        # return print("Registro Salvo com sucesso")
         # cur.close()
         # conn.close()
 
