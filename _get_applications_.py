@@ -4,20 +4,11 @@ from api import graphqlconsume, querygraphql
 import time
 import datetime
 import numpy as np
-"""
-current = np.datetime64(datetime.datetime.now())
-currentab = np.datetime64(current) + np.timedelta64(5, 'h')
-lastdate = np.datetime64(currentab) - np.timedelta64(15, 'm')
-print(lastdate)
-print(currentab)
-print('-')
-
-"""
 
 robo2 = rr.RobotRotine()
 dtinit = np.datetime64(datetime.datetime.now())
 dtinit = np.datetime64(dtinit) + np.timedelta64(3, 'h')
-dtfim = np.datetime64(dtinit)  # + np.timedelta64(30, 'm')
+dtfim = dtinit  # + np.timedelta64(30, 'm')
 while True:
     print(dtinit)
     print(dtfim)

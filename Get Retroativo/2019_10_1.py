@@ -15,11 +15,11 @@ print('-')
 """
 robo5 = rr.RobotRotine()
 i = 0
-dtinit = '2019-10-04T00:00:00'
-while i < 1:
+dtinit = '2019-10-04T00:00:00.645154'
+while i < 2:
     print(dtinit)
     dtfim = np.datetime64(dtinit) + np.timedelta64(24, 'h')
-    robo5.ExecutaRotina('date_approved', dtinit,
+    robo5.ExecutaRotina('created_at', dtinit,
                         dtfim, 1)
     i = i+1
     dtinit = np.datetime64(dtinit) + np.timedelta64(24, 'h')

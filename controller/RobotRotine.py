@@ -42,7 +42,7 @@ class RobotRotine:
                 temid = False
                 consultapl = banco.consultaApplication(conn, reg['id'])
                 if consultapl is not None:
-                    item = item + 1
+                    #item = item + 1
                     temid = True
                     # continue
 
