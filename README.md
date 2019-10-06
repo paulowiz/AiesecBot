@@ -30,8 +30,8 @@ Então o robô basicamente pega os dados pelo um range de data (inicio e fim) e 
          |--conexao.py
     |-- _get_accepted_.py
     |-- _get_applications_.py
-    |-- _get_approved.py
-    |-- _get_realized.py
+    |-- _get_approved_.py
+    |-- _get_realized_.py
 
 <br><br>
 ## 🌏 Hospedagem 
@@ -42,13 +42,21 @@ Então o robô basicamente pega os dados pelo um range de data (inicio e fim) e 
 ## 📢 Como executar
 
 Requisitos:
-Python 3.6
+
+Python 3.6<br>
+Node 10x<br>
+PostgreSQL<br>
+
+Criar as tabelas em seu banco de dados com o script:
+```bash 
+script_bd.sql
+```
 Instalar todas as depedências do python usando o arquivo requiriments.txt que está no projeto:  
 
 ```bash 
 pip install  -r requiriments.txt
  ```  
-Instalar o pm2 do nodejs
+Instalar o pm2 com npm do node:
 
 ```bash 
 npm install -g pm2
