@@ -7,7 +7,7 @@ import numpy as np
 
 robo2 = rr.RobotRotine()
 dtinit = np.datetime64(datetime.datetime.now())
-dtinit = np.datetime64(dtinit) + np.timedelta64(3, 'h')
+#dtinit = np.datetime64(dtinit) + np.timedelta64(3, 'h')
 dtfim = dtinit  # + np.timedelta64(30, 'm')
 while True:
     print(dtinit)
@@ -19,7 +19,7 @@ while True:
     time.sleep(1800)
     dtinit = dtfim
     dtfim = np.datetime64(datetime.datetime.now())
-    dtfim = np.datetime64(dtfim) + np.timedelta64(3, 'h')
+   # dtfim = np.datetime64(dtfim) + np.timedelta64(3, 'h')
     dtfim = np.datetime64(dtfim) + np.timedelta64(30, 'm')
 
 

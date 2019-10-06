@@ -1,0 +1,4 @@
+requests
+gql
+psycopg2
+numpy
