@@ -20,7 +20,7 @@ while True:
     dtinit = dtfim
     dtfim = np.datetime64(datetime.datetime.now())
     dtfim = np.datetime64(dtfim) + np.timedelta64(3, 'h')
-    dtfim = np.datetime64(dtfim) + np.timedelta64(2, 'm')
+    dtfim = np.datetime64(dtfim) + np.timedelta64(30, 'm')
 
 
 print('Periodo Executado com sucesso')
