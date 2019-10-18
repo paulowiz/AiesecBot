@@ -11,6 +11,10 @@ import datetime
 import time
 import os
 
+### THE ROUTINE BELOW TAKE ALL INFORMATION FROM EXPA DATABASE(aiesec.org)
+## AND SABE ON YOUR LOCAL DATABASE 
+
+#THIS ROUTINE WORKS WITH FOUR TABLES (APPLICATIONS,ENTITY,MC,OPPORTUNITY)
 
 class RobotRotine:
 
@@ -20,8 +24,8 @@ class RobotRotine:
 
     def ExecutaRotina(self, tp_data, dt_from, dt_to, page):
         # CONECTA NO BANCO E PERMITE FAZER QUERIES
-        banco = conexao("dashboardbf", "thaleslopes",
-                        "dashboard-bf.cpcjumtjwpk7.us-west-1.rds.amazonaws.com", "4568520rds")
+        banco = conexao("DATABASE", "USER",
+                        "HOST", "PASSWORD")
         conn = banco.conectadb()
         graphql = graphqlconsume.graphqlConsume()
         queryGraphQL = querygraphql.queryGraphql()

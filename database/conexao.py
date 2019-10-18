@@ -1,6 +1,8 @@
 import psycopg2
 import psycopg2.extras
 
+# CLASS THAT YOU USE TO CONNECT ON POSTGRESQL DATABASE
+
 
 class conexao:
 

@@ -11,13 +11,9 @@ class graphqlConsume:
 
     def __init__(self):
 
-        #token_get_url = "http://token.aiesec.org.br/get_token.php?token=c0aa46e01d77fb212fe0195636fb515f8e43b530087399ec49f"
-        #access_token_raw = requests.get(token_get_url)
-        #access_token = access_token_raw.text.strip()
-        #print('Setup complete! \nYour access token is ' + '"' + access_token + '"')
 
         _transport = RequestsHTTPTransport(
-            url='https://gis-api.aiesec.org/graphql?access_token=59f7cbef5abc385e5a9a32f599be7e76d30e8d9493b00d0258bf1125cfa55eef',
+            url='https://gis-api.aiesec.org/graphql?access_token=INSERT YOUR TOKEN HERE',
                 # str(access_token),
             use_json=True,
         )

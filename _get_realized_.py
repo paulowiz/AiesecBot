@@ -7,7 +7,6 @@ import numpy as np
 
 robo2 = rr.RobotRotine()
 dtinit = np.datetime64(datetime.datetime.now())
-#dtinit = np.datetime64(dtinit) + np.timedelta64(3, 'h')
 dtfim = dtinit
 while True:
     print(dtinit)
@@ -16,11 +15,10 @@ while True:
     robo2.ExecutaRotina('date_realized', dtinit,
                         dtfim, 1)
     print('Esperando o proximo intervalo para executar.......')
-    time.sleep(120)
+    time.sleep(7200)
     dtinit = dtfim
     dtfim = np.datetime64(datetime.datetime.now())
-    #dtfim = np.datetime64(dtfim) + np.timedelta64(3, 'h')
-    dtfim = np.datetime64(dtfim) + np.timedelta64(30, 'm')
+    dtfim = np.datetime64(dtfim) + np.timedelta64(120, 'm')
 
 
 print('Periodo Executado com sucesso')
