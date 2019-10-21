@@ -8,9 +8,8 @@
 
 ## 📚  Description
 
-EXPA Bot was created to get information from EXPA System through an API GraphQL and to save on Postgre's Data Base where International Aiesec give us a specific token to access.<br>
-Então o robô basicamente pega os dados pelo um range de data (inicio e fim) e verifique se houve  aprovados ,aceitos ,realizações e aplicações de intercâmbistas no EXPA , se houve, o robo atualiza ou insere os dados <br>
-Then the bot use start date and end date of event to get information about apporved,accepted,realized and applications of Exchange Participant from AIESEC. If bot to take any information that already there is on our database, it will update the information else it insert new information.<br>
+   EXPA Bot was created to get information from <b>EXPA System</b> through an <b>API GraphQL</b> and to save on <b>Postgre's Database</b> where International Aiesec give us a specific <b>TOKEN</b> to access that.<br>
+    Then the bot use start date and end date of event to get information about apporved,accepted,realized and applications of Exchange Participant from AIESEC. If bot to take any information that already there is on our database, it will <b>update</b> the information else it will <b>insert</b> new information.<br>
 
 
 <br><br>
@@ -21,7 +20,6 @@ Then the bot use start date and end date of event to get information about appor
 <img src ="https://user-images.githubusercontent.com/18649504/66262910-11ce9880-e7c0-11e9-870e-9f9809cdd193.png" width = "100">
 <img src ="https://user-images.githubusercontent.com/18649504/66262944-91f4fe00-e7c0-11e9-979d-2f370d1ebbbc.png" width = "100">
 
-<br><br>
 ## Structure's Project 📌
     |-- api
          |--graphqlconsume.py
@@ -35,21 +33,19 @@ Then the bot use start date and end date of event to get information about appor
     |-- _get_approved_.py
     |-- _get_realized_.py
 
-<br><br>
 ## 🌏 Hosting
 
    Expa bot has been hosted on AWS Server by AIESEC in Brazil<br>
 
-<br><br>
 ## 📢 How to use
 
 Required:
 
+Token AIESEC
 Python 3.6<br>
 Node 10x<br>
-PostgreSQL or other( But you will need change libs to your data base)<br>
+Postgre's Database or other( But you will need change libs to use your data base)<br>
 
-Criar as tabelas em seu banco de dados com o script:
 Create specific tables in your database,executing script below:
 ```bash 
 script_bd.sql
