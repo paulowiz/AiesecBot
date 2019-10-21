@@ -14,7 +14,7 @@ Then the bot use start date and end date of event to get information about appor
 
 
 <br><br>
-## 🚀 Tecnologies has used 
+## 🚀 Tecnologies have used 
 
 <img src="https://user-images.githubusercontent.com/18649504/66262823-725cd600-e7be-11e9-9cea-ea14305079db.png" width = "100">
 <img src="https://user-images.githubusercontent.com/18649504/66262824-74bf3000-e7be-11e9-9485-45eac5577165.png" width = "100">
@@ -59,7 +59,7 @@ Install all python's dependences with script below:
 ```bash 
 pip install  -r requiriments.txt
  ```  
-IInstall lib "pm2" on your node.js with NPM:
+Install lib "pm2" on your node.js with NPM:
 
 ```bash 
 npm install -g pm2
