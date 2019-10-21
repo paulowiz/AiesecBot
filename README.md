@@ -8,12 +8,12 @@
 
 ## 📚  Description
 
-   EXPA Bot was created to get information from <b>EXPA System</b> through an <b>API GraphQL</b> and to save on <b>Postgre's Database</b> where International Aiesec give us a specific <b>TOKEN</b> to access that.<br>
-    Then the bot use start date and end date of event to get information about apporved,accepted,realized and applications of Exchange Participant from AIESEC. If bot to take any information that already there is on our database, it will <b>update</b> the information else it will <b>insert</b> new information.<br>
+   EXPA Bot was created to get information from <b>EXPA System</b> through an <b>API GraphQL</b> and to save on <b>PostgreSQL's Database</b> where International AIESEC give us a specific <b>TOKEN</b> to access that.<br>
+    Then the bot use start date and end date of event to get information about approved,accepted,realized and applications of Exchange Participant from AIESEC. If bot to take any information that already there is on our database, it will <b>update</b> the information else it will <b>insert</b> new information.<br>
 
 
 <br><br>
-## 🚀 Tecnologies have used 
+## 🚀 Technologies have used 
 
 <img src="https://user-images.githubusercontent.com/18649504/66262823-725cd600-e7be-11e9-9cea-ea14305079db.png" width = "100">
 <img src="https://user-images.githubusercontent.com/18649504/66262824-74bf3000-e7be-11e9-9485-45eac5577165.png" width = "100">
@@ -44,13 +44,13 @@ Required:
 Token AIESEC
 Python 3.6<br>
 Node 10x<br>
-Postgre's Database or other( But you will need change libs to use your data base)<br>
+PostgreSQL's Database or other( But you will need change a lib to use your data base)<br>
 
 Create specific tables in your database,executing script below:
 ```bash 
 script_bd.sql
 ```
-Install all python's dependences with script below:  
+Install all python's dependencies with script below:  
 
 ```bash 
 pip install  -r requiriments.txt
@@ -60,7 +60,7 @@ Install lib "pm2" on your node.js with NPM:
 ```bash 
 npm install -g pm2
 ```
-After every instalations you can execute the bot,at directory's project with console CMD:  
+After every installations you can execute the bot,at directory's project with console CMD:  
 ```bash 
 pm2  start  _get_accepted_.py
 pm2  start  _get_applications_.py
@@ -83,7 +83,7 @@ Show bot's log:
 ```bash 
 pm2  logs _get_realized_.py
 ```
-There are many comands on PM2 you can see at all in its documentation https://www.npmjs.com/package/pm2.
+There are many commands on PM2 you can see at all in its documentation https://www.npmjs.com/package/pm2.
 
 ## 🔓 Licença 
 MIT © [Paulo Mota](https://www.linkedin.com/in/paulo-mota-955218a2/)
