@@ -1,4 +1,7 @@
 requests
-gql
-psycopg2
 numpy
+pandas
+json
+schedule
+python-dotenv
+gql
