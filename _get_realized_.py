@@ -4,21 +4,24 @@ from api import graphqlconsume, querygraphql
 import time
 import datetime
 import numpy as np
+import schedule 
 
-robo2 = rr.RobotRotine()
-dtinit = np.datetime64(datetime.datetime.now())
-dtfim = dtinit
-while True:
+def job():
+    robo2 = rr.RobotRotine()
+    dtfim = np.datetime64(datetime.datetime.now())
+    dtinit = np.datetime64(dtfim) - np.timedelta64(110, 'm')
+    print('Função Realized')
     print(dtinit)
     print(dtfim)
     print('-')
     robo2.ExecutaRotina('date_realized', dtinit,
-                        dtfim, 1)
-    print('Esperando o proximo intervalo para executar.......')
-    time.sleep(7200)
-    dtinit = dtfim
-    dtfim = np.datetime64(datetime.datetime.now())
-    dtfim = np.datetime64(dtfim) + np.timedelta64(120, 'm')
+                            dtfim, 1)
+    print('Periodo Executado com sucesso')
 
 
-print('Periodo Executado com sucesso')
+schedule.every(100).minutes.do(job)
+print('Esperando o proximo intervalo para executar.......')
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
