@@ -10,7 +10,7 @@ import pandas.io.json as pd_json
 import datetime
 import time
 import os
-
+from dotenv import load_dotenv
 ### THE ROUTINE BELOW TAKE ALL INFORMATION FROM EXPA DATABASE(aiesec.org)
 ## AND SABE ON YOUR LOCAL DATABASE 
 
@@ -24,13 +24,27 @@ class RobotRotine:
 
     def ExecutaRotina(self, tp_data, dt_from, dt_to, page):
         # CONECTA NO BANCO E PERMITE FAZER QUERIES
-        banco = conexao("DATABASE", "USER",
-                        "HOST", "PASSWORD")
-        conn = banco.conectadb()
+        load_dotenv()
+        DB_DATABASE = os.getenv("DB_DATABASE")
+        DB_USER = os.getenv("DB_USER")
+        DB_HOST = os.getenv("DB_HOST")
+        DB_PASSWORD = os.getenv("DB_PASSWORD")
+        
+        banco = conexao(DB_DATABASE, DB_USER,
+                       DB_HOST, DB_PASSWORD)
+        try:
+            conn = banco.conectadb()
+        except:
+            return print('Erro ao conectar no banco de dados')
+        
         graphql = graphqlconsume.graphqlConsume()
         queryGraphQL = querygraphql.queryGraphql()
         queryqg = queryGraphQL.chamaGraphQL(tp_data, dt_from, dt_to, page)
-        retorno = graphql.executaGraphQL(queryqg)
+        try:
+            retorno = graphql.executaGraphQL(queryqg)
+        except:
+            return print('Erro ao executar query GraphQL')
+        
         totpages = retorno['allOpportunityApplication']['paging']['total_pages']
         item = 1
         i = page
@@ -187,8 +201,11 @@ class RobotRotine:
 
                 # Valida se existe o mc e o lc nas tabelas e somente salva se realmente não tiver
                 if reg['person']['home_mc']['id'] is not None:
-                    consultmc = banco.consultaMc(
-                        conn, reg['person']['home_mc']['id'])
+                    try:
+                        consultmc = banco.consultaMc(
+                            conn, reg['person']['home_mc']['id'])
+                    except:
+                        return print('Erro ao consultar MC')
                     if consultmc is None:
                         person_homemc_name = reg['person']['home_mc']['name']
                         person_homemc_name = person_homemc_name.replace(
@@ -196,22 +213,34 @@ class RobotRotine:
                         query_mc_1 = "INSERT INTO mc(mc_id,mc_dsc)"
                         query_mc_1 += "VALUES(%s,'%s')" % (
                             reg['person']['home_mc']['id'], person_homemc_name)
-
-                        banco.executaQuery(conn, query_mc_1)
+                        try:
+                            banco.executaQuery(conn, query_mc_1)
+                            print('insert do MC realizado com sucesso!')
+                        except:
+                            return print('Erro ao inserir MC')
+                        
                 if reg['home_mc'] is not None:
-                    consultmc = banco.consultaMc(conn, reg['home_mc']['id'])
+                    try:
+                        consultmc = banco.consultaMc(conn, reg['home_mc']['id'])
+                    except:
+                        return print('Erro ao consultar MC')
                     if consultmc is None:
                         homemc_name = reg['home_mc']['name']
                         homemc_name = homemc_name.replace("'", "")
                         query_mc_2 = "INSERT INTO mc(mc_id,mc_dsc)"
                         query_mc_2 += "VALUES(%s,'%s')" % (
                             reg['home_mc']['id'], homemc_name)
-
-                        banco.executaQuery(conn, query_mc_2)
-                        print('insert do MC realizado com sucesso!')
-
-                consultentity = banco.consultaEntity(
+                        try:
+                            banco.executaQuery(conn, query_mc_2)
+                            print('insert do MC realizado com sucesso!')
+                        except:
+                            return print('Erro ao inserir MC')
+                        
+                try:
+                    consultentity = banco.consultaEntity(
                     conn, reg['host_lc']['id'])
+                except:
+                    return print('Erro ao consultar Entity')
                 if consultentity is None:
                     hostlc_name = reg['host_lc']['name']
                     hostlc_name = hostlc_name.replace("'", "")
@@ -219,22 +248,33 @@ class RobotRotine:
                     query_entity_1 += "VALUES(%s,'%s',%s)" % (reg['host_lc']['id'],
                                                               hostlc_name,
                                                               reg['home_mc']['id'])
-                    banco.executaQuery(conn, query_entity_1)
-                    print('insert do LC realizado com sucesso!')
-
-                consultentity = banco.consultaEntity(
+                    try:
+                        banco.executaQuery(conn, query_entity_1)
+                        print('insert do LC realizado com sucesso!')
+                    except:
+                        return print('Erro ao salvar Entity!')
+                try:
+                    consultentity = banco.consultaEntity(
                     conn, reg['person']['home_lc']['id'])
+                except:
+                    return print('Erro ao consultar Entity')
+                
                 if consultentity is None:
                     person_homelc_name = reg['person']['home_lc']['name']
                     person_homelc_name = person_homelc_name.replace("'", "")
                     query_entity_2 = "INSERT INTO entity(lc_id,lc_dsc,mc_id)"
                     query_entity_2 += "VALUES(%s,'%s',%s)" % (
                         reg['person']['home_lc']['id'], person_homelc_name, reg['person']['home_mc']['id'])
-
-                    banco.executaQuery(conn, query_entity_2)
-                    print('insert do LC realizado com sucesso!')
-
-                consultaOpp = banco.consultaOpp(conn, reg['opportunity']['id'])
+                    try:
+                        banco.executaQuery(conn, query_entity_2)
+                        print('insert do LC realizado com sucesso!')
+                    except:
+                        return print('Erro ao inserir Entity')
+                try:
+                    consultaOpp = banco.consultaOpp(conn, reg['opportunity']['id'])
+                except:
+                    return print('Erro ao consultar a oportunidade')
+                
                 if consultaOpp is None:
                     title = reg['opportunity']['title']
                     title = title.replace("'", "")
