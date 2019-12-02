@@ -11,8 +11,12 @@
    EXPA Bot was created to get information from <b>EXPA System</b> through an <b>API GraphQL</b> and to save on <b>PostgreSQL's Database</b> where International AIESEC give us a specific <b>TOKEN</b> to access that.<br>
     Then the bot use start date and end date of event to get information about approved,accepted,realized and applications of Exchange Participant from AIESEC. If bot to take any information that already there is on our database, it will <b>update</b> the information else it will <b>insert</b> new information.<br>
 
+## 📊 Dashboards 
 
-<br><br>
+With all information that I've been collected,  I've done 2 dashboards for AIESEC to follow their KPI (Key Performance Indicator) and MOS(measures of success).<br>
+OGX - Outgoing Exchange - http://bit.ly/apdogx<br>
+ICX - Incoming Exchange - http://bit.ly/apdsicx<br>
+
 ## 🚀 Technologies have used 
 
 <img src="https://user-images.githubusercontent.com/18649504/66262823-725cd600-e7be-11e9-9cea-ea14305079db.png" width = "100">
