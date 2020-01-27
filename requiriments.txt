@@ -1,7 +1,6 @@
 requests
 numpy
 pandas
-json
 schedule
 python-dotenv
 gql

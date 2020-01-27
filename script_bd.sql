@@ -7,6 +7,7 @@ id_ep bigint,
 id_opportunity bigint,
 id_home bigint,
 id_host bigint, 
+lc_home bigint,
 product varchar(38), 
 status varchar(38), 
 applied_at varchar(38), 
@@ -67,11 +68,10 @@ primary key(mc_id)
 
 -----entity------
 CREATE TABLE entity(
-ent_seq bigserial,
 lc_id bigint,
 lc_dsc varchar(38),
-mc_id bigint,
-primary key(ent_seq)
+mc_id bigint REFERENCES mc (mc_id),
+primary key(lc_id)
 );
 
 
@@ -84,8 +84,8 @@ available_openings bigint,
 duration bigint,
 subproduct varchar(38),
 product varchar(38),
-host_lc bigint,
-host_mc bigint,
+host_lc bigint REFERENCES entity (lc_id),
+host_mc bigint REFERENCES mc (mc_id),
 primary key (id)
 );
 -----------daal---------
