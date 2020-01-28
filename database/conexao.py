@@ -20,7 +20,7 @@ class conexao:
                 self.host,
                 self.password
             ))
-            print("Conexão com o banco realizada com sucesso!.")
+            #print("Conexão com o banco realizada com sucesso!.")
             return conn
         except:
             print("Erro ao logar no banco de dados.")

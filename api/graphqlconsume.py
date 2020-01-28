@@ -12,10 +12,6 @@ class graphqlConsume:
 
     def __init__(self):
 
-       #token_get_url = "http://token.aiesec.org.br/get_token.php?token=c0aa46e01d77fb212fe0195636fb515f8e43b530087399ec49f"
-        #access_token_raw = requests.get(token_get_url)
-        #access_token = access_token_raw.text.strip()
-        #print('Setup complete! \nYour access token is ' + '"' + access_token + '"')
         load_dotenv()
         _transport = RequestsHTTPTransport(
             url='https://gis-api.aiesec.org/graphql?access_token='+str(os.getenv("API_TOKEN")),
@@ -34,11 +30,10 @@ class graphqlConsume:
         client = self.client
         query = gql(input_query)
         query_json = client.execute(query)
-        print('Query GraphQL executada com sucesso!')
+        #print('Query GraphQL executada com sucesso!')
         dados = json.dumps(query_json, indent=4)
-        # print(dados)
         retorno = json.loads(dados)
-        # print(retorno)
+        
         return retorno
 
 

@@ -20,7 +20,7 @@ class RobotRotine:
 
     def __init__(self):
         #self.name = name
-        print('Robo criado!')
+        print('O Robo está processando....')
 
     def ExecutaRotina(self, tp_data, dt_from, dt_to, page):
         # CONECTA NO BANCO E PERMITE FAZER QUERIES
@@ -56,7 +56,7 @@ class RobotRotine:
             datapage = retorno['allOpportunityApplication']['paging']
 
             for reg in data:
-                print(item)
+                #print(item)
                 temid = False
                 consultapl = banco.consultaApplication(conn, reg['id'])
                 if consultapl is not None:
@@ -215,7 +215,7 @@ class RobotRotine:
                             reg['person']['home_mc']['id'], person_homemc_name)
                         try:
                             banco.executaQuery(conn, query_mc_1)
-                            print('insert do MC realizado com sucesso!')
+                            #print('insert do MC realizado com sucesso!')
                         except:
                             return print('Erro ao inserir MC')
                         
@@ -232,7 +232,7 @@ class RobotRotine:
                             reg['home_mc']['id'], homemc_name)
                         try:
                             banco.executaQuery(conn, query_mc_2)
-                            print('insert do MC realizado com sucesso!')
+                            #print('insert do MC realizado com sucesso!')
                         except:
                             return print('Erro ao inserir MC')
                         
@@ -250,7 +250,7 @@ class RobotRotine:
                                                               reg['home_mc']['id'])
                     try:
                         banco.executaQuery(conn, query_entity_1)
-                        print('insert do LC realizado com sucesso!')
+                        #print('insert do LC realizado com sucesso!')
                     except:
                         return print('Erro ao salvar Entity!')
                 try:
@@ -267,7 +267,7 @@ class RobotRotine:
                         reg['person']['home_lc']['id'], person_homelc_name, reg['person']['home_mc']['id'])
                     try:
                         banco.executaQuery(conn, query_entity_2)
-                        print('insert do LC realizado com sucesso!')
+                        #print('insert do LC realizado com sucesso!')
                     except:
                         return print('Erro ao inserir Entity')
                 try:
@@ -296,19 +296,20 @@ class RobotRotine:
                         continue
                 if temid is False:
                     banco.executaQuery(conn, query)
-                    print('insert da aplicação realizado com sucesso!')
+                    #print('insert da aplicação realizado com sucesso!')
                 else:
                     banco.executaQuery(conn, queryup)
-                    print('update da aplicação realizado com sucesso!')
+                    #print('update da aplicação realizado com sucesso!')
 
                 item = item + 1
-            print(retorno['allOpportunityApplication']
-                  ['paging']['total_pages'])
-            print(retorno['allOpportunityApplication']
-                  ['paging']['current_page'])
+            #print(retorno['allOpportunityApplication']
+             #     ['paging']['total_pages'])
+            #print(retorno['allOpportunityApplication']
+             #     ['paging']['current_page'])
             totpages = totpages - 1
             if totpages <= 0:
                 #print('Processo finalizado!')
+                print('Foram processados '+str(i)+' pagina(s) e '+str(item)+' Registro(s)')
                 exit
             i = i+1
             queryqg = queryGraphQL.chamaGraphQL(tp_data, dt_from, dt_to, i)
