@@ -127,3 +127,24 @@ sdg_target varchar(2048),
 ep_backgrouds varchar(2048),
 primary key (reg_seq)
 );
+
+CREATE INDEX opportunity_id_idx on opportunity(id);
+CREATE INDEX opportunity_host_lc_idx on opportunity(host_lc);
+CREATE INDEX opportunity_host_mc_idx on opportunity(host_mc);
+CREATE INDEX entity_mc_id_idx on entity(mc_id);
+CREATE INDEX entity_lc_id_idx on entity(lc_id);
+CREATE INDEX mc_mc_id_idx on mc(mc_id);
+CREATE INDEX mc_mc_dsc_idx on mc(mc_dsc);
+CREATE INDEX applications_apl_seq_idx on applications(id_application);
+CREATE INDEX applications_apl_seq_idx on applications(apl_seq);
+CREATE INDEX applications_id_opportunity_idx on applications(id_opportunity);
+CREATE INDEX applications_id_home_idx on applications(id_home);
+CREATE INDEX applications_id_host_idx on applications(id_host);
+CREATE INDEX applications_lc_home_idx on applications(lc_home);
+CREATE INDEX applications_product_idx on applications(product);
+CREATE INDEX applications_status_idx on applications(status);
+CREATE INDEX applications_applied_at_idx on applications(applied_at);
+CREATE INDEX applications_accepted_at_idx on applications(accepted_at);
+CREATE INDEX applications_approved_at_idx on applications(approved_at);
+CREATE INDEX applications_realized_at_idx on applications(realized_at);
+CREATE INDEX applications_completed_at_idx on applications(completed_at);
