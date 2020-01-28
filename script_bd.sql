@@ -1,13 +1,41 @@
------------ applications----------
+-----mc-----------
+CREATE TABLE mc(
+mc_id bigint,
+mc_dsc varchar(38),
+primary key(mc_id)
+);
 
+-----entity------
+CREATE TABLE entity(
+lc_id bigint,
+lc_dsc varchar(38),
+mc_id bigint REFERENCES mc (mc_id),
+primary key(lc_id)
+);
+
+-------- opportunity---------------
+CREATE TABLE opportunity(
+id bigInt,
+title varchar(38),
+created_at timestamp,
+available_openings bigint,
+duration bigint,
+subproduct varchar(38),
+product varchar(38),
+host_lc bigint REFERENCES entity (lc_id),
+host_mc bigint REFERENCES mc (mc_id),
+primary key (id)
+);
+
+----------- applications----------
 CREATE TABLE applications(
 apl_seq bigserial, 
 id_application bigint,
 id_ep bigint,
-id_opportunity bigint,
-id_home bigint,
-id_host bigint, 
-lc_home bigint,
+id_opportunity bigint REFERENCES opportunity (id),
+id_home bigint REFERENCES mc (mc_id),
+id_host bigint REFERENCES mc (mc_id), 
+lc_home bigint REFERENCES entity (lc_id),
 product varchar(38), 
 status varchar(38), 
 applied_at varchar(38), 
@@ -58,36 +86,6 @@ date_std_15 timestamp,
 date_std_16 timestamp,
 primary key (std_seq)
 );
-
------mc-----------
-CREATE TABLE mc(
-mc_id bigint,
-mc_dsc varchar(38),
-primary key(mc_id)
-);
-
------entity------
-CREATE TABLE entity(
-lc_id bigint,
-lc_dsc varchar(38),
-mc_id bigint REFERENCES mc (mc_id),
-primary key(lc_id)
-);
-
-
--------- opportunity---------------
-CREATE TABLE opportunity(
-id bigInt,
-title varchar(38),
-created_at timestamp,
-available_openings bigint,
-duration bigint,
-subproduct varchar(38),
-product varchar(38),
-host_lc bigint REFERENCES entity (lc_id),
-host_mc bigint REFERENCES mc (mc_id),
-primary key (id)
-);
 -----------daal---------
 CREATE TABLE daal(
 reg_seq bigserial, 
@@ -135,7 +133,7 @@ CREATE INDEX entity_mc_id_idx on entity(mc_id);
 CREATE INDEX entity_lc_id_idx on entity(lc_id);
 CREATE INDEX mc_mc_id_idx on mc(mc_id);
 CREATE INDEX mc_mc_dsc_idx on mc(mc_dsc);
-CREATE INDEX applications_apl_seq_idx on applications(id_application);
+CREATE INDEX applications_id_application_idx on applications(id_application);
 CREATE INDEX applications_apl_seq_idx on applications(apl_seq);
 CREATE INDEX applications_id_opportunity_idx on applications(id_opportunity);
 CREATE INDEX applications_id_home_idx on applications(id_home);
