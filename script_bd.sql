@@ -1,14 +1,14 @@
 -----mc-----------
 CREATE TABLE mc(
 mc_id bigint,
-mc_dsc varchar(38),
+mc_dsc varchar(1024),
 primary key(mc_id)
 );
 
 -----entity------
 CREATE TABLE entity(
 lc_id bigint,
-lc_dsc varchar(38),
+lc_dsc varchar(1024),
 mc_id bigint REFERENCES mc (mc_id),
 primary key(lc_id)
 );
@@ -16,11 +16,11 @@ primary key(lc_id)
 -------- opportunity---------------
 CREATE TABLE opportunity(
 id bigInt,
-title varchar(38),
+title varchar(1024),
 created_at timestamp,
 available_openings bigint,
 duration bigint,
-subproduct varchar(38),
+subproduct varchar(1024),
 product varchar(38),
 host_lc bigint REFERENCES entity (lc_id),
 host_mc bigint REFERENCES mc (mc_id),
