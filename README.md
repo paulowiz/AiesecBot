@@ -15,7 +15,7 @@
 
 With all information that I've been collected,  I've done 2 dashboards for AIESEC to follow their KPI (Key Performance Indicator) and MOS(measures of success).<br>
 OGX - Outgoing Exchange - http://bit.ly/apdogx<br>
-ICX - Incoming Exchange - http://bit.ly/apdsicx<br>
+ICX - Incoming Exchange - http://bit.ly/apdsicxv1<br>
 
 ## 🚀 Technologies have used 
 
