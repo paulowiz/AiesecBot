@@ -1,9 +1,9 @@
 
-![1_7g5hEDbnq7GbpUwPnd02qQ](https://user-images.githubusercontent.com/18649504/66263084-9c64c700-e7c3-11e9-86dd-253fcd1c7292.png)
+<img src="https://user-images.githubusercontent.com/18649504/66263084-9c64c700-e7c3-11e9-86dd-253fcd1c7292.png" width = "400">
 
 ## 🤖 EXPA Bot
 
-![Robô](https://user-images.githubusercontent.com/18649504/66263309-f87d1a80-e7c6-11e9-8162-8e9c4c066b33.png)
+<img src="https://user-images.githubusercontent.com/18649504/66263309-f87d1a80-e7c6-11e9-8162-8e9c4c066b33.png" width = "600">
 
 
 ## 📚  Description
@@ -14,7 +14,7 @@
 ## 📊 Dashboards 
 
 With all information that I've been collected,  I've done 2 dashboards for AIESEC to follow their KPI (Key Performance Indicator) and MOS(measures of success).<br>
-OGX - Outgoing Exchange - http://bit.ly/apdogx<br>
+OGX - Outgoing Exchange - http://bit.ly/apdsogxv1<br>
 ICX - Incoming Exchange - http://bit.ly/apdsicxv1<br>
 
 ## 🚀 Technologies have used 
