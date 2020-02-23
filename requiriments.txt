@@ -4,3 +4,4 @@ pandas
 schedule
 python-dotenv
 gql
+psycopg2
