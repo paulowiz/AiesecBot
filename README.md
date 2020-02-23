@@ -45,8 +45,8 @@ ICX - Incoming Exchange - http://bit.ly/apdsicxv1<br>
 
 Required:
 
-Token AIESEC
-Python 3.6<br>
+Token AIESEC<br>
+Python 3.7.5 or more<br>
 Node 10x<br>
 PostgreSQL's Database or other( But you will need change a lib to use your data base)<br>
 
