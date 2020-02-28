@@ -50,6 +50,27 @@ Python 3.7.5 or more<br>
 Node 10x<br>
 PostgreSQL's Database or other( But you will need change a lib to use your data base)<br>
 
+Tips about Linux's Environment:<br>
+Before everything you need to rum this command:
+```bash 
+sudo apt update
+```
+Install Python 3:
+```bash 
+sudo apt-get install python3
+```
+Install pip 3:
+```bash 
+sudo apt-get install python3-pip
+```
+Install Node:
+```bash 
+sudo apt install nodejs
+```
+Install npm:
+```bash 
+sudo apt install npm
+```
 Create specific tables in your database,executing script below:
 ```bash 
 script_bd.sql
@@ -58,6 +79,7 @@ Install all python's dependencies with script below:
 
 ```bash 
 pip install  -r requiriments.txt
+pip3 install  -r requiriments.txt(linux)
  ```  
 Install lib "pm2" on your node.js with NPM:
 
@@ -70,6 +92,13 @@ pm2  start  _get_accepted_.py
 pm2  start  _get_applications_.py
 pm2  start   _get_approved_.py
 pm2  start    _get_realized_.py
+```
+if your linux has other versions installed, you need to use:  
+```bash 
+pm2  start  _get_accepted_.py --interpreter python3
+pm2  start  _get_applications_.py --interpreter python3
+pm2  start   _get_approved_.py --interpreter python3
+pm2  start    _get_realized_.py --interpreter python3
 ```
 ![image](https://user-images.githubusercontent.com/18649504/66263916-a2fa3b00-e7d1-11e9-902b-07ccce624de3.png)
 
