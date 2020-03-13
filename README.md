@@ -78,8 +78,8 @@ script_bd.sql
 Install all python's dependencies with script below:  
 
 ```bash 
-pip install  -r requiriments.txt
-pip3 install  -r requiriments.txt(linux)
+pip install  -r requirements.txt
+pip3 install  -r requirements.txt(linux)
  ```  
 Install lib "pm2" on your node.js with NPM:
 
